@@ -1,4 +1,8 @@
-import { Navbar } from "./components/Navbar";
+import { EventList } from "./components/EventList";
 export default function Home() {
-  return <Navbar />;
+  return (
+    <div>
+      <EventList />
+    </div>
+  );
 }
