@@ -32,7 +32,6 @@ const Modal = ({ setShowModal, showModal, event }) => {
                 <div className="w-full h-full">
                   <div className="flex text-[1.875rem] font-semibold justify-between mb-4">
                     <span>{event.title.slice(0, 12)}...</span>
-
                     <div className="bg-[#ECEAFF] px-2 py-2 w-[12.3rem] h-fit p-2 text-sm text-[#5041BC] ml-16">
                       {event.start}
                     </div>

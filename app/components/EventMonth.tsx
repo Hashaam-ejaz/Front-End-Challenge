@@ -67,7 +67,7 @@ const EventMonth = () => {
       <div className="flex h-full w-3/4 max-w-[22.5rem] bg-white rounded-[0.375rem] mx-4 mb-4 mt-0 pt-0">
         <div className="flex gap-16">
           <div className="flex flex-col text-[0.75rem] ml-[0.938rem] mt-[0.688rem]">
-            <div className="flex text-[#5041BC] font-bold">
+            <div className="flex text-[#5041BC] font-bold ">
               {highestRankEvent.title}
             </div>
             <div className="flex">
@@ -79,7 +79,9 @@ const EventMonth = () => {
             </div>
             <div className="flex">
               <Image src={pin} alt="pin" className="mr-[0.094rem]" />{" "}
-              {highestRankEvent.entities[0].formatted_address}
+              <span className="truncate w-[8rem]">
+                {highestRankEvent.entities[0].formatted_address}
+              </span>
             </div>
           </div>
           <div className="flex flex-col">
