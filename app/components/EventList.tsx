@@ -1,24 +1,19 @@
 "use client";
 import menuButton from "../../public/eventMenu.svg";
 import { Event } from "./Event";
+import { EventCounter } from "./EventCounter";
 import Modal from "../components/modal";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import event from "../types/Event";
 
 const EventList = () => {
-  interface eventPropTypes {
-    id: number;
-    title: string;
-    start: string;
-    location: [number, number];
-  }
-
-  const [events, setEvents] = useState<eventPropTypes[] | null>(null);
+  const [events, setEvents] = useState<event[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [selectedEvent, setSelectedEvent] = useState<eventPropTypes | null>(
-    null
-  );
+  const [selectedEvent, setSelectedEvent] = useState<event | null>(null);
+  const [allEventsCount, setAllEventsCount] = useState<number>(0);
+  const [thisMonthEventsCount, setThisMonthEventsCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -37,6 +32,22 @@ const EventList = () => {
 
         const eventsData = await response.json();
         setEvents(eventsData.results);
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
+
+        const allEvents = eventsData.results.length;
+        const thisMonthEvents = eventsData.results.filter((event: event) => {
+          const eventDate = new Date(event.start);
+          return (
+            eventDate.getMonth() === currentMonth &&
+            eventDate.getFullYear() === currentYear
+          );
+        }).length;
+
+        setAllEventsCount(allEvents);
+        setThisMonthEventsCount(thisMonthEvents);
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -48,7 +59,7 @@ const EventList = () => {
     fetchEvents();
   }, []);
 
-  const handleEventClick = (event: eventPropTypes) => {
+  const handleEventClick = (event: event) => {
     setSelectedEvent(event);
     setShowModal(true);
   };
@@ -89,6 +100,14 @@ const EventList = () => {
         showModal={showModal}
         event={selectedEvent}
       />
+      <div className="flex w-full md:w-[53.875rem] justify-evenly mt-[1.188rem] mx-[1.375rem] mb-[1.25rem]">
+        <EventCounter title="All Events" eventNum={allEventsCount} />
+        <EventCounter
+          title="This Months Events"
+          eventNum={thisMonthEventsCount}
+        />
+        <EventCounter title="Favourite Events" eventNum={0} />
+      </div>
     </div>
   );
 };

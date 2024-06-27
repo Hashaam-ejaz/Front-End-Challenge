@@ -1,15 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { UpcomingEvent } from "./UpcomingEvent";
+import eventType from "../types/Event";
 
 const UpcomingEvents = () => {
-  interface eventPropTypes {
-    id: number;
-    title: string;
-    start: string;
-    location: [number, number];
-  }
-  const [events, setEvents] = useState<eventPropTypes[] | null>(null);
+  const [events, setEvents] = useState<eventType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

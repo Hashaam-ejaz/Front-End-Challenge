@@ -1,14 +1,8 @@
 import Image from "next/image";
 import emptyHeart from "../../public/emptyHeart.svg";
+import eventType from "../types/Event";
 
-interface eventPropTypes {
-  id: number;
-  title: string;
-  start: string;
-  location: [number, number];
-}
-
-const UpcomingEvent: React.FC<{ eventProps: eventPropTypes; id: number }> = ({
+const UpcomingEvent: React.FC<{ eventProps: eventType; id: number }> = ({
   eventProps,
   id,
 }) => {

@@ -1,16 +1,10 @@
 import Image from "next/image";
 import emptyHeart from "../../public/emptyHeart.svg";
 import heart from "../../public/heart.svg";
-
-interface eventPropTypes {
-  id: number;
-  title: string;
-  start: string;
-  location: [number, number];
-}
+import eventType from "../types/Event";
 
 const Event: React.FC<{
-  eventProps: eventPropTypes;
+  eventProps: eventType;
   id: number;
   modalOpen: any;
 }> = ({ eventProps, id, modalOpen }) => {
