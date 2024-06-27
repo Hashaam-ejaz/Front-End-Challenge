@@ -21,3 +21,28 @@
     text-wrap: balance;
   }
 }
+
+.backgroundOverlay {
+  background: linear-gradient(to top right, #5041bc, #a26aea),
+    url("../public/waves.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.loader {
+  border: 16px solid #5441da; /* Light grey */
+  border-top: 16px solid #5041bc; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
