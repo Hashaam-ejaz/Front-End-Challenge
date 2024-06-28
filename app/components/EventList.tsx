@@ -17,7 +17,9 @@ const EventList = () => {
   const [showCategoryFilterModal, setShowCategoryFilterModal] =
     useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [eventCategories, setEventCategories] = useState<string[]>([]); // State to hold event categories
+  const [eventCategories, setEventCategories] = useState<string[]>([]);
+  const [selectedFromDate, setSelectedFromDate] = useState<string | null>(null);
+  const [selectedToDate, setSelectedToDate] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -87,10 +89,26 @@ const EventList = () => {
     setShowCategoryFilterModal(false);
   };
 
-  // Filter events based on selectedCategory
-  const filteredEvents = selectedCategory
-    ? events?.filter((event: EventType) => event.category === selectedCategory)
-    : events;
+  // Filter events based on selectedCategory, selectedFromDate, and selectedToDate
+  const filteredEvents = events?.filter((event: EventType) => {
+    let matchesCategory = true;
+    let matchesFromDate = true;
+    let matchesToDate = true;
+
+    if (selectedCategory) {
+      matchesCategory = event.category === selectedCategory;
+    }
+
+    if (selectedFromDate) {
+      matchesFromDate = new Date(event.start) >= new Date(selectedFromDate);
+    }
+
+    if (selectedToDate) {
+      matchesToDate = new Date(event.start) <= new Date(selectedToDate);
+    }
+
+    return matchesCategory && matchesFromDate && matchesToDate;
+  });
 
   if (loading) {
     return (
@@ -143,7 +161,9 @@ const EventList = () => {
         showModal={showCategoryFilterModal}
         onSelectCategory={handleCategorySelect}
         onCloseModal={handleCloseCategoryFilterModal}
-        categories={eventCategories} // Pass eventCategories state as prop
+        categories={eventCategories}
+        setSelectedFromDate={setSelectedFromDate}
+        setSelectedToDate={setSelectedToDate}
       />
       <div className="flex w-full md:w-[53.875rem] justify-evenly mt-[1.188rem] mx-[1.375rem] mb-[1.25rem]">
         <EventCounter title="All Events" eventNum={allEventsCount} />

@@ -80,7 +80,7 @@ const EventMonth = () => {
             <div className="flex">
               <Image src={pin} alt="pin" className="mr-[0.094rem]" />{" "}
               <span className="truncate w-[8rem]">
-                {highestRankEvent.entities[0].formatted_address}
+                {highestRankEvent?.entities[0]?.formatted_address}
               </span>
             </div>
           </div>

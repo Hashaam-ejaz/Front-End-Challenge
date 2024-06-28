@@ -9,6 +9,7 @@ export default function Home() {
         <div className="flex flex-col order-first md:order-first">
           <UpcomingEvents />
           <div className="hidden md:flex">
+            {" "}
             <EventMonth />
           </div>
         </div>

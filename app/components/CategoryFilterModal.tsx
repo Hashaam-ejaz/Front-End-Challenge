@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 
 interface CategoryFilterModalProps {
   showModal: boolean;
-  onSelectCategory: (category: string | null) => void; // Updated to accept null
+  onSelectCategory: (category: string | null) => void;
   onCloseModal: () => void;
   categories: string[];
+  setSelectedFromDate: (date: string | null) => void;
+  setSelectedToDate: (date: string | null) => void;
 }
 
 const CategoryFilterModal: React.FC<CategoryFilterModalProps> = ({
@@ -12,22 +14,44 @@ const CategoryFilterModal: React.FC<CategoryFilterModalProps> = ({
   onSelectCategory,
   onCloseModal,
   categories,
+  setSelectedFromDate,
+  setSelectedToDate,
 }) => {
   const handleCategorySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCategory = e.target.value;
     if (selectedCategory === "") {
-      onSelectCategory(null); // Handle "None" option
+      onSelectCategory(null);
     } else {
       onSelectCategory(selectedCategory);
     }
   };
 
-  // Add event listener when component mounts to handle click outside modal
+  const handleFromDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFromDate(e.target.value);
+  };
+
+  const handleToDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedToDate(e.target.value);
+  };
+
+  const generateDateOptions = () => {
+    const dates = [];
+    const now = new Date();
+    for (let i = 0; i < 30; i++) {
+      const date = new Date();
+      date.setDate(now.getDate() + i);
+      dates.push(date.toISOString().split("T")[0]);
+    }
+    return dates;
+  };
+
+  const dateOptions = generateDateOptions();
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target.closest(".bg-white")) {
-        onCloseModal(); // Close modal if clicked outside the modal content
+        onCloseModal();
       }
     };
 
@@ -48,8 +72,8 @@ const CategoryFilterModal: React.FC<CategoryFilterModalProps> = ({
         showModal ? "" : "hidden"
       }`}
     >
-      <div className="bg-white p-4 rounded-lg w-[15.625rem] h-[18rem] flex flex-col ml-[1.25rem]">
-        <div className="text-sm font-normal  mt-[1.063rem] mb-[0.75rem]">
+      <div className="bg-white p-4 rounded-lg w-[15.625rem] md:w-[30rem] h-[21rem] flex flex-col ml-[1.25rem]">
+        <div className="text-sm font-normal mt-[1.063rem] mb-[0.75rem]">
           Category
         </div>
         <div className="flex mb-[1.625rem]">
@@ -59,8 +83,7 @@ const CategoryFilterModal: React.FC<CategoryFilterModalProps> = ({
           >
             <option defaultChecked value="">
               None
-            </option>{" "}
-            {/* Add "None" option */}
+            </option>
             {categories.map((category) => (
               <option key={category} value={category}>
                 {category}
@@ -71,10 +94,36 @@ const CategoryFilterModal: React.FC<CategoryFilterModalProps> = ({
         <div className="flex font-normal text-sm mb-[0.813rem]">
           Date & Time
         </div>
-        <div className="flex mb-[0.375rem]">From</div>
-        <div className="flex">Date from Dropdown</div>
-        <div className="flex mb-[0.375rem] mt-[0.75rem]">To</div>
-        <div className="flex">Date To Dropdown</div>
+        <div className="flex flex-col md:flex-row md:space-x-4">
+          <div className="flex flex-col mb-[0.375rem] md:mb-0">
+            <div className="mb-[0.375rem]">From</div>
+            <select
+              className="w-full p-2 border border-gray-300 rounded-md"
+              onChange={handleFromDateChange}
+            >
+              <option value="">Select Date</option>
+              {dateOptions.map((date) => (
+                <option key={date} value={date}>
+                  {date}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col mt-[0.75rem] md:mt-0">
+            <div className="mb-[0.375rem]">To</div>
+            <select
+              className="w-full p-2 border border-gray-300 rounded-md"
+              onChange={handleToDateChange}
+            >
+              <option value="">Select Date</option>
+              {dateOptions.map((date) => (
+                <option key={date} value={date}>
+                  {date}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   );
