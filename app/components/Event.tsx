@@ -23,7 +23,7 @@ const Event: React.FC<{
       <div className="flex w-[5.75rem] truncate">
         {eventProps.start.slice(0, 10)}
       </div>
-      <div className="flex font-medium text-[#797D8C] w-[5.75rem] truncate">
+      <div className="flex font-medium text-[#797D8C] w-[5rem] truncate">
         {eventProps.location}
       </div>
       <div className="flex">

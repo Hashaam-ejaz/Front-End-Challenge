@@ -111,15 +111,17 @@ const EventList = () => {
   });
 
   return (
-    <div className="flex flex-col w-full md:w-[53.875rem] mx-[1.25rem]">
+    <div className="flex flex-col w-full max-w-full md:max-w-[53.875rem] mx-auto overflow-x-hidden px-4 md:px-0">
       {loading ? (
-        <div className="loader flex justify-center items-center ml-56"></div>
+        <div className="flex justify-center items-center w-full h-32">
+          <div className="loader"></div>
+        </div>
       ) : (
-        <div className="flex flex-col w-full md:w-[53.875rem] mx-[1.25rem]">
-          <div className="flex justify-between items-center">
+        <div className="flex flex-col w-full">
+          <div className="flex justify-between items-center mb-4">
             <div className="text-base font-semibold">Events List</div>
             <div
-              className="w-[1.563rem] h-[1.563rem] cursor-pointer"
+              className="w-6 h-6 cursor-pointer"
               onClick={() => setShowCategoryFilterModal(true)}
             >
               <Image
@@ -130,13 +132,12 @@ const EventList = () => {
               />
             </div>
           </div>
-          <div className="flex text-base font-semibold justify-between">
-            <div className="flex flex-col pl-8">#</div>
-            <div className="flex flex-col">Name</div>
-            <div className="flex flex-col">Time</div>
-            <div className="flex flex-col">Date</div>
-            <div className="flex flex-col">Location</div>
-            <div className="flex flex-col min-w-[2rem]"></div>
+          <div className="grid grid-cols-5 gap-2 text-base font-semibold mb-2">
+            <div className="pl-4">#</div>
+            <div>Name</div>
+            <div>Time</div>
+            <div>Date</div>
+            <div>Location</div>
           </div>
           {filteredEvents && filteredEvents.length > 0 ? (
             filteredEvents.map((event, index) => (
@@ -163,7 +164,7 @@ const EventList = () => {
             setSelectedFromDate={setSelectedFromDate}
             setSelectedToDate={setSelectedToDate}
           />
-          <div className="flex w-full md:w-[53.875rem] justify-evenly mt-[1.188rem] mx-[1.375rem] mb-[1.25rem]">
+          <div className="flex justify-evenly mt-4 mb-4">
             <EventCounter title="All Events" eventNum={allEventsCount} />
             <EventCounter
               title="This Month's Events"

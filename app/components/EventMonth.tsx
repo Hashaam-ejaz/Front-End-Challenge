@@ -51,7 +51,7 @@ const EventMonth = () => {
 
   if (!highestRankEvent) {
     return (
-      <div className="loader flex justify-center items-center ml-40 mt-32"></div>
+      <div className="loader flex justify-center items-center md:ml-40 md:mt-32"></div>
     );
   }
 
