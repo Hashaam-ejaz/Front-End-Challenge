@@ -50,7 +50,9 @@ const EventMonth = () => {
   }, []);
 
   if (!highestRankEvent) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loader flex justify-center items-center ml-40 mt-32"></div>
+    );
   }
 
   return (

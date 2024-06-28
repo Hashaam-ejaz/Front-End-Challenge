@@ -110,69 +110,69 @@ const EventList = () => {
     return matchesCategory && matchesFromDate && matchesToDate;
   });
 
-  if (loading) {
-    return (
-      <div className="loader flex justify-center items-center w-screen h-screen"></div>
-    );
-  }
-
   return (
     <div className="flex flex-col w-full md:w-[53.875rem] mx-[1.25rem]">
-      <div className="flex justify-between items-center">
-        <div className="text-base font-semibold">Events List</div>
-        <div
-          className="w-[1.563rem] h-[1.563rem] cursor-pointer"
-          onClick={() => setShowCategoryFilterModal(true)}
-        >
-          <Image
-            src="/eventMenu.svg"
-            alt="Menu Button"
-            width={20}
-            height={20}
-          />
-        </div>
-      </div>
-      <div className="flex text-base font-semibold justify-between">
-        <div className="flex flex-col pl-8">#</div>
-        <div className="flex flex-col">Name</div>
-        <div className="flex flex-col">Time</div>
-        <div className="flex flex-col">Date</div>
-        <div className="flex flex-col">Location</div>
-        <div className="flex flex-col min-w-[2rem]"></div>
-      </div>
-      {filteredEvents && filteredEvents.length > 0 ? (
-        filteredEvents.map((event, index) => (
-          <Event
-            key={event.id}
-            eventProps={event}
-            id={index + 1}
-            modalOpen={() => handleEventClick(event)}
-          />
-        ))
+      {loading ? (
+        <div className="loader flex justify-center items-center ml-56"></div>
       ) : (
-        <div className="text-center mt-4">No events found.</div>
+        <div className="flex flex-col w-full md:w-[53.875rem] mx-[1.25rem]">
+          <div className="flex justify-between items-center">
+            <div className="text-base font-semibold">Events List</div>
+            <div
+              className="w-[1.563rem] h-[1.563rem] cursor-pointer"
+              onClick={() => setShowCategoryFilterModal(true)}
+            >
+              <Image
+                src="/eventMenu.svg"
+                alt="Menu Button"
+                width={20}
+                height={20}
+              />
+            </div>
+          </div>
+          <div className="flex text-base font-semibold justify-between">
+            <div className="flex flex-col pl-8">#</div>
+            <div className="flex flex-col">Name</div>
+            <div className="flex flex-col">Time</div>
+            <div className="flex flex-col">Date</div>
+            <div className="flex flex-col">Location</div>
+            <div className="flex flex-col min-w-[2rem]"></div>
+          </div>
+          {filteredEvents && filteredEvents.length > 0 ? (
+            filteredEvents.map((event, index) => (
+              <Event
+                key={event.id}
+                eventProps={event}
+                id={index + 1}
+                modalOpen={() => handleEventClick(event)}
+              />
+            ))
+          ) : (
+            <div className="text-center mt-4">No events found.</div>
+          )}
+          <Modal
+            setShowModal={setShowEventModal}
+            showModal={showEventModal}
+            event={selectedEvent}
+          />
+          <CategoryFilterModal
+            showModal={showCategoryFilterModal}
+            onSelectCategory={handleCategorySelect}
+            onCloseModal={handleCloseCategoryFilterModal}
+            categories={eventCategories}
+            setSelectedFromDate={setSelectedFromDate}
+            setSelectedToDate={setSelectedToDate}
+          />
+          <div className="flex w-full md:w-[53.875rem] justify-evenly mt-[1.188rem] mx-[1.375rem] mb-[1.25rem]">
+            <EventCounter title="All Events" eventNum={allEventsCount} />
+            <EventCounter
+              title="This Month's Events"
+              eventNum={thisMonthEventsCount}
+            />
+            <EventCounter title="Favourite Events" eventNum={0} />
+          </div>
+        </div>
       )}
-      <Modal
-        setShowModal={setShowEventModal}
-        showModal={showEventModal}
-        event={selectedEvent}
-      />
-      <CategoryFilterModal
-        showModal={showCategoryFilterModal}
-        onSelectCategory={handleCategorySelect}
-        onCloseModal={handleCloseCategoryFilterModal}
-        categories={eventCategories}
-        setSelectedFromDate={setSelectedFromDate}
-        setSelectedToDate={setSelectedToDate}
-      />
-      <div className="flex w-full md:w-[53.875rem] justify-evenly mt-[1.188rem] mx-[1.375rem] mb-[1.25rem]">
-        <EventCounter title="All Events" eventNum={allEventsCount} />
-        <EventCounter
-          title="This Month's Events"
-          eventNum={thisMonthEventsCount}
-        />
-        <EventCounter title="Favourite Events" eventNum={0} />
-      </div>
     </div>
   );
 };
